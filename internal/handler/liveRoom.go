@@ -1,0 +1,114 @@
+package handler
+
+import (
+	"live_room/internal/service"
+	"log"
+	"net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
+
+// 获取直播间列表
+func GetLiveRooms(c *gin.Context) {
+	liveRoomService := &service.LiveRoomService{}
+	liveRooms, err := liveRoomService.GetLiveRooms()
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 404,
+			"msg":  "直播间列表为空",
+			"data": nil,
+		})
+		return
+	} else if err != nil {
+		log.Printf("GetLiveRooms error: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code": 500,
+			"msg":  "服务端异常",
+			"data": nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "success",
+		"data": liveRooms,
+	})
+}
+
+// 获取单个直播间详情
+func GetLRDetail(c *gin.Context) {
+	liveRoomId := c.Param("id")
+	id, err := strconv.Atoi(liveRoomId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": -1,
+			"msg":  "参数id格式错误",
+			"data": nil,
+		})
+		return
+	}
+	liveRoomService := &service.LiveRoomService{}
+	liveRoom, err := liveRoomService.GetLRDetail(int64(id))
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 404,
+			"msg":  "未找到直播间",
+			"data": nil,
+		})
+		return
+	} else if err != nil {
+		log.Printf("GetLRDetail error: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code": 500,
+			"msg":  "服务端异常",
+			"data": nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "success",
+		"data": liveRoom,
+	})
+}
+
+// 获取直播间回放地址
+func GetReplayUrl(c *gin.Context) {
+	liveRoomId := c.Query("id")
+	id, err := strconv.Atoi(liveRoomId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": -1,
+			"msg":  "参数id格式错误",
+			"data": nil,
+		})
+		return
+	}
+	liveRoomService := &service.LiveRoomService{}
+	replayURL, err := liveRoomService.GetReplayUrlByID(int64(id))
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 404,
+			"msg":  "未找到直播间",
+			"data": nil,
+		})
+		return
+	} else if err != nil {
+		log.Printf("GetReplayUrlByID error: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code": 500,
+			"msg":  "服务端异常",
+			"data": nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "success",
+		"data": gin.H{
+			"replay_url": replayURL,
+		},
+	})
+}
