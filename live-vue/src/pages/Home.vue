@@ -19,14 +19,19 @@
     <div class="main-content">
       <!-- 主内容区（左） -->
       <main class="main-left">
-        <div class="course-card">
-          <img class="course-cover" src="/cover-demo.png" alt="cover" />
-          <div class="course-info">
+        <!-- 直播间信息卡片：只展示一条数据 -->
+        <div class="liveRoom-card" v-if="liveRoom">
+          <img class="liveRoom-cover" :src="liveRoom.cover" alt="cover" />
+          <div class="liveRoom-info">
             <span class="live-tag">直播</span>
-            <span class="course-title">bz67</span>
-            <span class="course-time">直播时间：2024.06.07 11:00:00</span>
-            <el-button type="success" size="small">进入回看</el-button>
-            <span class="live-status">直播已结束</span>
+            <span class="liveRoom-title">{{ liveRoom.title }}</span>
+            <span class="liveRoom-time">直播时间：{{ formatTime(liveRoom.created_at) }}</span>
+            <el-button type="success" size="small" @click="gotoLiveRoom">
+              进入回看
+            </el-button>
+            <span class="live-status">
+              {{ liveRoom.status === 2 ? "直播已结束" : "直播中" }}
+            </span>
           </div>
         </div>
         <!-- Tab 区 -->
@@ -52,7 +57,7 @@
         <div class="recommend-list">
           <div class="recommend-title">相关推荐</div>
           <div class="recommend-item" v-for="item in 3" :key="item">
-            <img class="recommend-cover" src="/course-demo.png" />
+            <img class="recommend-cover" src="/liveRoom-demo.png" />
             <div class="recommend-info">
               <div class="recommend-name">常常常常测测测测测测...</div>
               <span class="recommend-price">免费</span>
@@ -63,6 +68,41 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { getLiveRoomDetail } from '@/api/liveRoom'
+
+const liveRoom = ref(null)
+const router = useRouter()
+
+// 首页暂时只展示id=7这一个直播间
+onMounted(async () => {
+  const res = await getLiveRoomDetail(3)
+  if (res.data.code === 0) {
+    liveRoom.value = res.data.data
+  }
+  // liveRoom.value = {
+  //   id: 7,
+  //   title: '测试课程',
+  //   cover: '/cover-demo.png',
+  //   created_at: '2024-06-07T11:00:00',
+  //   status: 2
+  // }
+})
+
+function gotoLiveRoom() {
+  // 跳转到详情页（/liveRoom/7）
+  router.push(`/liveRoom/${liveRoom.value.id}`)
+}
+
+// 时间格式化
+function formatTime(time) {
+  if (!time) return ''
+  return time.replace('T', ' ').replace('+08:00', '')
+}
+</script>
 
 <style scoped>
 .home {
@@ -119,7 +159,7 @@
 .main-left {
   flex: 1 1 0;
 }
-.course-card {
+.liveRoom-card {
   display: flex;
   background: #fff;
   border-radius: 10px;
@@ -129,13 +169,13 @@
   align-items: center;
   gap: 28px;
 }
-.course-cover {
+.liveRoom-cover {
   width: 180px;
   height: 120px;
   border-radius: 8px;
   background: #e6f6fb;
 }
-.course-info {
+.liveRoom-info {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -151,12 +191,12 @@
   width: 36px;
   text-align: center;
 }
-.course-title {
+.liveRoom-title {
   font-size: 21px;
   font-weight: bold;
   margin-bottom: 6px;
 }
-.course-time {
+.liveRoom-time {
   color: #666;
   font-size: 13px;
 }
