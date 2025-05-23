@@ -3,16 +3,18 @@ package service
 import (
 	"live_room/internal/model"
 	"live_room/pkg/db"
+	"log"
 )
 
 type LiveRoomService struct {
+	liveRoom model.LiveRoom
 }
 
 // 查询直播间列表
 func (lr *LiveRoomService) GetLiveRooms() ([]*model.LiveRoom, error) {
-	var liveRoom model.LiveRoom
-	liveRooms, err := liveRoom.GetLiveRooms(db.DB)
+	liveRooms, err := lr.liveRoom.GetLiveRooms(db.DB)
 	if err != nil {
+		log.Fatalf("liveRooms, err := lr.liveRoom.GetLiveRooms(db.DB) err:%v", err)
 		return nil, err
 	}
 	return liveRooms, err
@@ -20,20 +22,18 @@ func (lr *LiveRoomService) GetLiveRooms() ([]*model.LiveRoom, error) {
 
 // 查询单个直播间详情
 func (lr *LiveRoomService) GetLRDetail(id int64) (*model.LiveRoom, error) {
-	var liveRoom *model.LiveRoom
-	err := liveRoom.GetLiveRoomByID(db.DB, id)
+	err := lr.liveRoom.GetLiveRoomByID(db.DB, id)
 	if err != nil {
 		return nil, err
 	}
-	return liveRoom, err
+	return &lr.liveRoom, err
 }
 
 // 查询直播间回放地址
 func (lr *LiveRoomService) GetReplayUrlByID(id int64) (string, error) {
-	var liveRoom model.LiveRoom
-	err := liveRoom.GetLiveRoomByID(db.DB, id)
+	err := lr.liveRoom.GetLiveRoomByID(db.DB, id)
 	if err != nil {
 		return "", err
 	}
-	return liveRoom.ReplayURL, nil
+	return lr.liveRoom.ReplayURL, nil
 }
