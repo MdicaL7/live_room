@@ -9,5 +9,3 @@ services:
       TZ: Asia/Shanghai              # 时区
     ports:
       - "3306:3306"                  # 主机:容器端口映射
-    volumes:
-      - ./data/mysql:/var/lib/mysql  # 数据持久化目录
