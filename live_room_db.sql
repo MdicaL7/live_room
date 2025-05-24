@@ -11,7 +11,7 @@
  Target Server Version : 80042 (8.0.42)
  File Encoding         : 65001
 
- Date: 23/05/2025 22:45:43
+ Date: 24/05/2025 22:58:50
 */
 
 SET NAMES utf8mb4;
@@ -72,20 +72,27 @@ INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, 
 COMMIT;
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for users
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `password` varchar(128) DEFAULT NULL COMMENT 'mima',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Records of user
+-- Records of users
 -- ----------------------------
 BEGIN;
+INSERT INTO `users` (`id`, `username`, `created_at`, `password`) VALUES (1, 'mike', '2025-05-24 15:20:52', '123123');
+INSERT INTO `users` (`id`, `username`, `created_at`, `password`) VALUES (2, 'alice', '2025-05-24 15:21:06', '123123');
+INSERT INTO `users` (`id`, `username`, `created_at`, `password`) VALUES (3, 'bob', '2025-05-24 15:21:06', '123123');
+INSERT INTO `users` (`id`, `username`, `created_at`, `password`) VALUES (4, 'charlie', '2025-05-24 15:21:06', '123123');
+INSERT INTO `users` (`id`, `username`, `created_at`, `password`) VALUES (5, 'diana', '2025-05-24 15:21:06', '123123');
+INSERT INTO `users` (`id`, `username`, `created_at`, `password`) VALUES (6, 'eva', '2025-05-24 15:21:06', '123123');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
