@@ -18,7 +18,7 @@
             系统提示：直播内容及互动评论严禁传播违法或不实信息，如有违规，均将依法采取封禁措施。严禁未成年人直播打赏。请谨慎判断，注意财产安全，以防人身或财产损失。
           </div>
           <div class="user-row">
-            <img class="avatar" src="/teacher-demo.png" />
+            <img class="avatar" src="/anchor-demo.png" />
             <span class="username">直播助手</span>
           </div>
           <el-card class="welcome-box">

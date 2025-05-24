@@ -9,6 +9,7 @@ import (
 type User struct {
 	ID        int64     `json:"id"`
 	Username  string    `json:"username"`
+	Password  string    `json:"password"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
@@ -25,10 +26,19 @@ func (u *User) CreateUser(db *gorm.DB, user *User) error {
 	return db.Create(user).Error
 }
 
-// 查询用户
+// 用id查询用户
 func (u *User) FindUserById(db *gorm.DB, id int64) (*User, error) {
 	user := &User{}
 	if err := db.First(user, id).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+// 用name查询用户
+func (u *User) FindUserByName(db *gorm.DB, username string) (*User, error) {
+	user := &User{}
+	if err := db.Where("username=?", username).First(user).Error; err != nil {
 		return nil, err
 	}
 	return user, nil

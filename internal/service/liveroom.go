@@ -6,12 +6,12 @@ import (
 	"log"
 )
 
-type LiveRoomService struct {
+type LiveRoom struct {
 	liveRoom model.LiveRoom
 }
 
 // 查询直播间列表
-func (lr *LiveRoomService) GetLiveRooms() ([]*model.LiveRoom, error) {
+func (lr *LiveRoom) GetLiveRooms() ([]*model.LiveRoom, error) {
 	liveRooms, err := lr.liveRoom.GetLiveRooms(db.DB)
 	if err != nil {
 		log.Fatalf("liveRooms, err := lr.liveRoom.GetLiveRooms(db.DB) err:%v", err)
@@ -21,7 +21,7 @@ func (lr *LiveRoomService) GetLiveRooms() ([]*model.LiveRoom, error) {
 }
 
 // 查询单个直播间详情
-func (lr *LiveRoomService) GetLRDetail(id int64) (*model.LiveRoom, error) {
+func (lr *LiveRoom) GetLRDetail(id int64) (*model.LiveRoom, error) {
 	err := lr.liveRoom.GetLiveRoomByID(db.DB, id)
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (lr *LiveRoomService) GetLRDetail(id int64) (*model.LiveRoom, error) {
 }
 
 // 查询直播间回放地址
-func (lr *LiveRoomService) GetReplayUrlByID(id int64) (string, error) {
+func (lr *LiveRoom) GetReplayUrlByID(id int64) (string, error) {
 	err := lr.liveRoom.GetLiveRoomByID(db.DB, id)
 	if err != nil {
 		return "", err

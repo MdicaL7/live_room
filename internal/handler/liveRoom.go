@@ -10,9 +10,12 @@ import (
 	"gorm.io/gorm"
 )
 
+type LiveRoom struct {
+}
+
 // 获取直播间列表
-func GetLiveRooms(c *gin.Context) {
-	liveRoomService := &service.LiveRoomService{}
+func (lr *LiveRoom) GetLiveRooms(c *gin.Context) {
+	liveRoomService := &service.LiveRoom{}
 	liveRooms, err := liveRoomService.GetLiveRooms()
 	if err == gorm.ErrRecordNotFound {
 		c.JSON(http.StatusOK, gin.H{
@@ -38,7 +41,7 @@ func GetLiveRooms(c *gin.Context) {
 }
 
 // 获取单个直播间详情
-func GetLRDetail(c *gin.Context) {
+func (lr *LiveRoom) GetLRDetail(c *gin.Context) {
 	liveRoomId := c.Param("id")
 	id, err := strconv.Atoi(liveRoomId)
 	if err != nil {
@@ -49,7 +52,7 @@ func GetLRDetail(c *gin.Context) {
 		})
 		return
 	}
-	liveRoomService := &service.LiveRoomService{}
+	liveRoomService := &service.LiveRoom{}
 	liveRoom, err := liveRoomService.GetLRDetail(int64(id))
 	if err == gorm.ErrRecordNotFound {
 		c.JSON(http.StatusOK, gin.H{
@@ -75,7 +78,7 @@ func GetLRDetail(c *gin.Context) {
 }
 
 // 获取直播间回放地址
-func GetReplayUrl(c *gin.Context) {
+func (lr *LiveRoom) GetReplayUrl(c *gin.Context) {
 	liveRoomId := c.Query("id")
 	id, err := strconv.Atoi(liveRoomId)
 	if err != nil {
@@ -86,7 +89,7 @@ func GetReplayUrl(c *gin.Context) {
 		})
 		return
 	}
-	liveRoomService := &service.LiveRoomService{}
+	liveRoomService := &service.LiveRoom{}
 	replayURL, err := liveRoomService.GetReplayUrlByID(int64(id))
 	if err == gorm.ErrRecordNotFound {
 		c.JSON(http.StatusOK, gin.H{
