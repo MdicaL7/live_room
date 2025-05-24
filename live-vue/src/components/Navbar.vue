@@ -49,11 +49,12 @@ import { ArrowDown } from '@element-plus/icons-vue'
 const username = ref('')
 
 onMounted(() => {
-  username.value = localStorage.getItem('username') || ''
+  //username.value = localStorage.getItem('username') || ''
+  username.value = sessionStorage.getItem('username') || ''
 })
 
 function logout() {
-  localStorage.removeItem('username')
+  sessionStorage.removeItem('username')
   location.reload()
 }
 </script>

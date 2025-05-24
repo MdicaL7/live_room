@@ -6,11 +6,13 @@
     <!-- 主内容区域（左右结构） -->
     <div class="main-content">
       <main class="main-left">
-        <LiveRoomCard :liveRoom="liveRoom" @goto="gotoLiveRoom" />
+        <LiveRoomCard :liveRoom="liveRoom"
+                      @goto="gotoLiveRoom" />
         <el-tabs class="detail-tabs">
           <el-tab-pane label="详情">
             <div class="empty-box">
-              <img src="/empty-box.png" style="width:120px;" />
+              <img src="/empty-box.png"
+                   style="width:120px;" />
               <div>暂无简介</div>
             </div>
           </el-tab-pane>
@@ -43,7 +45,7 @@ const showLogin = ref(false)
 const router = useRouter()
 onMounted(async () => {
   const res = await getLiveRoomDetail(3)
-  if (res.data.code === 0) {
+  if (res.data.code === 200) {
     liveRoom.value = res.data.data
   }
 })

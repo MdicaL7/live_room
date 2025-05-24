@@ -67,7 +67,8 @@ async function handleLogin() {
     )
     if (res.data.code === 200) {
       // 存储用户名到本地（localStorage），方便全局组件获取
-      localStorage.setItem('username', res.data.data.username)
+      //localStorage.setItem('username', res.data.data.username)
+      sessionStorage.setItem('username', res.data.data.username)
       // 关闭弹窗
       emit('update:modelValue', false)
       resetLoginForm()

@@ -34,7 +34,7 @@ func (lr *LiveRoom) GetLiveRooms(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
+		"code": 200,
 		"msg":  "success",
 		"data": liveRooms,
 	})
@@ -71,7 +71,7 @@ func (lr *LiveRoom) GetLRDetail(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
+		"code": 200,
 		"msg":  "success",
 		"data": liveRoom,
 	})
@@ -108,7 +108,7 @@ func (lr *LiveRoom) GetReplayUrl(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
+		"code": 200,
 		"msg":  "success",
 		"data": gin.H{
 			"replay_url": replayURL,

@@ -3,14 +3,11 @@ package main
 import (
 	"live_room/config"
 	"live_room/internal/handler"
+	websocket "live_room/internal/webSocket"
 	"live_room/pkg/db"
 
 	"github.com/gin-gonic/gin"
 )
-
-/*
-主程序入口
-*/
 
 func main() {
 	//初始化读取配置文件
@@ -30,6 +27,7 @@ func main() {
 	user := &handler.User{}
 	//登录
 	r.POST("/v1/api/login", user.Login)
-
+	//webSocket
+	r.GET("/v1/api/ws/:roomID", websocket.WebsHandler)
 	r.Run(":8080")
 }
