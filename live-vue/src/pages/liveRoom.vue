@@ -113,7 +113,9 @@ onMounted(async () => {
     })
 
     // WebSocket连接
-    socket = new WebSocket(`ws://localhost:8080/v1/api/ws/${liveRoom.value.id}`)
+    const backendHost = window.location.hostname // 自动适配当前访问的 IP
+    const wsUrl = `ws://${backendHost}:8080/v1/api/ws/${liveRoom.value.id}`
+    socket = new WebSocket(wsUrl)
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data)
       messages.value.push(msg)
