@@ -1,7 +1,7 @@
 <template>
   <header class="navbar">
     <div class="navbar-logo">
-      <img src="/logo.png"
+      <img src="https://wechatapppro-1252524126.file.myqcloud.com/appAKLWLitn7978/image/b_u_5b2225aa46488_oGKN7IvA/kxkdcblx0wlc.png"
            alt="logo" />
     </div>
     <nav class="navbar-menu">

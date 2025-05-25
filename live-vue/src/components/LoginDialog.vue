@@ -37,7 +37,7 @@ import qs from 'qs'
 const props = defineProps({
   modelValue: Boolean,
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'login-success']) // 新增login-success
 const loginForm = ref({ username: '', password: '' })
 const loginFormRef = ref(null)
 const loginLoading = ref(false)
@@ -47,6 +47,7 @@ const dialogVisible = computed({
   get: () => props.modelValue,
   set: (val) => emit('update:modelValue', val),
 })
+
 async function handleLogin() {
   loginMsg.value = ''
   if (!loginForm.value.username || !loginForm.value.password) {
@@ -66,20 +67,18 @@ async function handleLogin() {
       }
     )
     if (res.data.code === 200) {
-      // 存储用户名到本地（localStorage），方便全局组件获取
-      //localStorage.setItem('username', res.data.data.username)
+      // 存储用户名
       sessionStorage.setItem('username', res.data.data.username)
-      // 关闭弹窗
+      // emit 通知父组件
+      emit('login-success', res.data.data.username)
       emit('update:modelValue', false)
       resetLoginForm()
-      // 刷新页面
-      window.location.reload()
+      // 不再刷新页面
+      // window.location.reload()
     } else {
-      // 后端主动返回的失败（但HTTP是200）
       loginMsg.value = res.data.msg || '登录失败'
     }
   } catch (e) {
-    // axios 对 401/404 默认会 reject 到这里
     loginMsg.value = e?.response?.data?.msg || '登录请求异常'
   }
   loginLoading.value = false

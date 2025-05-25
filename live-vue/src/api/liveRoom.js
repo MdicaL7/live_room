@@ -4,3 +4,8 @@ import axios from "./axios";
 export function getLiveRoomDetail(id){
     return axios.get(`/v1/api/liveRoom/${id}`)
 }
+
+//获取直播间列表
+export function getLiveRoomList() {
+  return axios.get('/v1/api/liveRoom')
+}

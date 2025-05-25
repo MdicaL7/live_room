@@ -22,8 +22,6 @@ func main() {
 	r.GET("/v1/api/liveRoom", liveRoom.GetLiveRooms)
 	//获取单个直播
 	r.GET("/v1/api/liveRoom/:id", liveRoom.GetLRDetail)
-	//获取回放路由
-	r.GET("/v1/api/replay", liveRoom.GetReplayUrl)
 	user := &handler.User{}
 	//登录
 	r.POST("/v1/api/login", user.Login)

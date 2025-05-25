@@ -1,8 +1,10 @@
 <template>
   <div class="anchor-card">
-    <img class="anchor-avatar" src="/anchor-demo.png" />
+    <img class="anchor-avatar"
+         src="https://png.pngtree.com/element_our/20190603/ourmid/pngtree-user-flat-character-avatar-png-image_1442186.jpg" />
     <div class="anchor-name">现网蓝悦2号【7978勿动】</div>
-    <el-button type="info" size="small">进店逛逛</el-button>
+    <el-button type="info"
+               size="small">进店逛逛</el-button>
   </div>
 </template>
 <script setup></script>

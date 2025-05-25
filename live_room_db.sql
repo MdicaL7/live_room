@@ -11,7 +11,7 @@
  Target Server Version : 80042 (8.0.42)
  File Encoding         : 65001
 
- Date: 24/05/2025 22:58:50
+ Date: 25/05/2025 13:29:36
 */
 
 SET NAMES utf8mb4;
@@ -59,16 +59,16 @@ CREATE TABLE `live_rooms` (
 -- Records of live_rooms
 -- ----------------------------
 BEGIN;
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (1, 'Python基础入门', '零基础入门Python，适合新手', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/python_base.jpg', '张老师');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (2, 'Go语言进阶', 'Go语言实战开发与性能优化', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/go_advanced.jpg', '李工');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (3, 'Web前端项目实战', '前端Vue、React主流框架对比', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/frontend.jpg', '王老师');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (4, 'AI基础与应用', '人工智能基础知识及应用场景', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/ai_base.jpg', '赵博士');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (5, '大数据入门', '大数据生态与Hadoop实战', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/bigdata.jpg', '刘老师');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (6, '算法刷题训练营', '数据结构与算法专项突破', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/algorithm.jpg', '陈老师');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (7, '产品经理成长课', '需求分析到产品迭代实战案例', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/pm.jpg', '吴老师');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (8, '云计算与容器', 'Docker、K8S核心原理与实战', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/cloud.jpg', '钱老师');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (9, '数据库设计实战', 'MySQL、MongoDB数据建模与优化', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/database.jpg', '孙工');
-INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (10, '直播运营技巧', '直播间搭建、推广、复盘一条龙', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-23 14:34:22', '/covers/live_ops.jpg', '直播小助手');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (1, 'Python基础入门', '零基础入门Python，适合新手', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-25 12:58:04', 'https://commonresource-1252524126.cdn.xiaoeknow.com/image/l6nfw9120t1u.png?imageView2/2/w/1050/q/100|imageMogr2/ignore-error/1', '张老师');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (2, 'Go语言进阶', 'Go语言实战开发与性能优化', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-25 12:59:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6uxJq8Q2ZkRF-kXWdsQ8jLYoGKS2Vt7Hauw&s', '李工');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (3, 'Web前端项目实战', '前端Vue、React主流框架对比', 2, '/videos/1.mp4', '2025-05-22 10:53:33', '2025-05-25 12:23:37', 'https://commonresource-1252524126.cdn.xiaoeknow.com/image/l6nfw9120t1u.png?imageView2/2/w/1050/q/100|imageMogr2/ignore-error/1', '王老师');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (4, 'AI基础与应用', '人工智能基础知识及应用场景', 2, '/videos/2.mp4', '2025-05-22 10:53:33', '2025-05-25 12:57:57', 'https://commonresource-1252524126.cdn.xiaoeknow.com/image/l6nfw9120t1u.png?imageView2/2/w/1050/q/100|imageMogr2/ignore-error/1', '赵博士');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (5, '大数据入门', '大数据生态与Hadoop实战', 2, '/videos/2.mp4', '2025-05-22 10:53:33', '2025-05-25 12:59:17', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjTGMeFL-Raw50IF1ND7bYU5MYGcS2vQThEg&s', '刘老师');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (6, '算法刷题训练营', '数据结构与算法专项突破', 2, '/videos/2.mp4', '2025-05-22 10:53:33', '2025-05-25 12:59:25', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGljwv-_NUEaqzbSjzyM8C3UGE2deCK3B9kg&s', '陈老师');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (7, '产品经理成长课', '需求分析到产品迭代实战案例', 2, '/videos/3.mp4', '2025-05-22 10:53:33', '2025-05-25 12:58:00', 'https://commonresource-1252524126.cdn.xiaoeknow.com/image/l6nfw9120t1u.png?imageView2/2/w/1050/q/100|imageMogr2/ignore-error/1', '吴老师');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (8, '云计算与容器', 'Docker、K8S核心原理与实战', 2, '/videos/3.mp4', '2025-05-22 10:53:33', '2025-05-25 12:59:31', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuePWF433ArptgmKdKa7bKsMBy0SYrf7hZ6A&s', '钱老师');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (9, '数据库设计实战', 'MySQL、MongoDB数据建模与优化', 2, '/videos/3.mp4', '2025-05-22 10:53:33', '2025-05-25 12:59:34', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgum5jMsm_zwDpq32aXTQLvnFV96fdhq_NJA&s', '孙工');
+INSERT INTO `live_rooms` (`id`, `title`, `description`, `status`, `replay_url`, `created_at`, `updated_at`, `cover`, `anchor`) VALUES (10, '直播运营技巧', '直播间搭建、推广、复盘一条龙', 2, '/videos/3.mp4', '2025-05-22 10:53:33', '2025-05-25 12:58:07', 'https://commonresource-1252524126.cdn.xiaoeknow.com/image/l6nfw9120t1u.png?imageView2/2/w/1050/q/100|imageMogr2/ignore-error/1', '直播小助手');
 COMMIT;
 
 -- ----------------------------

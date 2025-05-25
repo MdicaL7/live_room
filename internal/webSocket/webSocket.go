@@ -49,8 +49,6 @@ func WebsHandler(c *gin.Context) {
 			log.Printf("ReadMessage error: %v", err)
 			break
 		}
-		// 
-
 		// 广播给房间内所有连接
 		roomConnMapLock.Lock()
 		for client := range roomConnMap[roomID] {

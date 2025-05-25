@@ -1,18 +1,35 @@
+<!-- RecommendList.vue -->
 <template>
   <div class="recommend-list">
     <div class="recommend-title">相关推荐</div>
-    <div class="recommend-item" v-for="item in 3" :key="item">
-      <img class="recommend-cover" src="/liveRoom-demo.png" />
+    <div class="recommend-item"
+         v-for="item in list"
+         :key="item.id"
+         @click="handleClick(item)">
+      <img class="recommend-cover"
+           :src="item.cover" />
       <div class="recommend-info">
-        <div class="recommend-name">常常常常测测测测测测...</div>
-        <span class="recommend-price">免费</span>
+        <div class="recommend-name">{{ item.title }}</div>
+        <div class="recommend-desc">{{ item.description }}</div>
       </div>
     </div>
   </div>
 </template>
-<script setup></script>
+
+<script setup>
+const emit = defineEmits(['select'])
+defineProps({
+  list: {
+    type: Array,
+    required: true,
+  },
+})
+function handleClick(item) {
+  emit('select', item)
+}
+</script>
+
 <style scoped>
-/* 复制 .recommend-list, .recommend-title, .recommend-item, .recommend-cover, .recommend-info, .recommend-name, .recommend-price 样式 */
 .recommend-list {
   background: #fff;
   border-radius: 10px;
@@ -30,6 +47,7 @@
   gap: 10px;
   padding: 7px 0;
   border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
 }
 .recommend-item:last-child {
   border-bottom: none;
@@ -39,6 +57,7 @@
   height: 42px;
   border-radius: 5px;
   background: #e6f6fb;
+  object-fit: cover;
 }
 .recommend-info {
   flex: 1;
@@ -52,9 +71,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 2px;
+  font-weight: 600;
 }
-.recommend-price {
-  color: #10b98a;
+.recommend-desc {
   font-size: 12px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

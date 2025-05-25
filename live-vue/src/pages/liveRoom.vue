@@ -1,92 +1,99 @@
 <template>
-  <div class="live-room-wrap"
-       v-if="liveRoom">
-    <!-- 左侧视频播放区 -->
-    <div class="video-area">
-      <video class="video-player"
-             controls
-             :src="liveRoom?.replay_url"
-             poster="/cover-demo.png"></video>
-    </div>
+  <div>
+    <div class="live-room-wrap"
+         v-if="liveRoom">
+      <!-- 左侧视频播放区 -->
+      <div class="video-area">
+        <video class="video-player"
+               controls
+               :src="liveRoom?.replay_url"
+               :poster="liveRoom?.cover"></video>
+      </div>
 
-    <!-- 右侧互动区 -->
-    <div class="side-panel">
-      <el-tabs v-model="activeTab">
-        <el-tab-pane label="讲解"
-                     name="explain">
-          <div class="system-tip">
-            系统提示：直播内容及互动评论严禁传播违法或不实信息，如有违规，均将依法采取封禁措施。严禁未成年人直播打赏。请谨慎判断，注意财产安全，以防人身或财产损失。
-          </div>
-          <div class="user-row">
-            <img class="avatar"
-                 src="/anchor-demo.png" />
-            <span class="username">直播助手</span>
-          </div>
-          <el-card class="welcome-box">
-            <div style="color:#3698f7;">欢迎进入直播间：</div>
-            <div style="font-size:14px;">
-              1. 请自行调节手机音量至合适的状态。<br />
-              2. 直播界面显示讲师发布的内容，听众可在讨论区进行交流或弹幕形式查看。<br />
-              3. 直播结束后，你可以随时回看全部内容。
+      <!-- 右侧互动区 -->
+      <div class="side-panel">
+        <el-tabs v-model="activeTab">
+          <el-tab-pane label="讲解"
+                       name="explain">
+            <div class="system-tip">
+              系统提示：直播内容及互动评论严禁传播违法或不实信息，如有违规，均将依法采取封禁措施。严禁未成年人直播打赏。请谨慎判断，注意财产安全，以防人身或财产损失。
             </div>
-          </el-card>
-        </el-tab-pane>
-        <el-tab-pane label="讨论"
-                     name="discuss">
-          <div class="chat-list">
-            <div class="chat-msg"
-                 v-for="(msg, idx) in messages"
-                 :key="idx"
-                 :class="{ 'my-msg': msg.user === username }">
-              <span class="msg-user">{{ msg.user }}</span>
-              <span class="msg-content">{{ msg.content }}</span>
+            <div class="user-row">
+              <img class="avatar"
+                   src="https://png.pngtree.com/element_our/20190603/ourmid/pngtree-user-flat-character-avatar-png-image_1442186.jpg" />
+              <span class="username">直播助手</span>
             </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="文件"
-                     name="files">
-          <div style="color:#888;">暂无文件</div>
-        </el-tab-pane>
-      </el-tabs>
+            <el-card class="welcome-box">
+              <div style="color:#3698f7;">欢迎进入直播间：</div>
+              <div style="font-size:14px;">
+                1. 请自行调节手机音量至合适的状态。<br />
+                2. 直播界面显示讲师发布的内容，听众可在讨论区进行交流或弹幕形式查看。<br />
+                3. 直播结束后，你可以随时回看全部内容。
+              </div>
+            </el-card>
+          </el-tab-pane>
+          <el-tab-pane label="讨论"
+                       name="discuss">
+            <div class="chat-list">
+              <div class="chat-msg"
+                   v-for="(msg, idx) in messages"
+                   :key="idx"
+                   :class="{ 'my-msg': msg.user === username }">
+                <span class="msg-user">{{ msg.user }}</span>
+                <span class="msg-content">{{ msg.content }}</span>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="文件"
+                       name="files">
+            <div style="color:#888;">暂无文件</div>
+          </el-tab-pane>
+        </el-tabs>
 
-      <!-- 聊天输入区 -->
-      <div class="chat-input-area">
-        <el-input v-model="inputMsg"
-                  placeholder="请输入您的讨论内容"
-                  size="small"
-                  @keyup.enter="sendMsg"></el-input>
-        <el-button type="success"
-                   size="small"
-                   style="margin-left: 8px"
-                   @click="sendMsg">发送</el-button>
+        <!-- 聊天输入区 -->
+        <div class="chat-input-area">
+          <el-input v-model="inputMsg"
+                    placeholder="请输入您的讨论内容"
+                    size="small"
+                    @keyup.enter="sendMsg"></el-input>
+          <el-button type="success"
+                     size="small"
+                     style="margin-left: 8px"
+                     @click="sendMsg">发送</el-button>
+        </div>
       </div>
     </div>
+    <div v-else
+         class="loading-wrap">加载中...</div>
+    <!-- 登录弹窗在最外层 -->
+    <LoginDialog v-model="showLogin"
+                 @login-success="handleLoginSuccess" />
   </div>
-  <div v-else
-       class="loading-wrap">加载中...</div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { getLiveRoomDetail } from '@/api/liveRoom'
+import LoginDialog from '@/components/LoginDialog.vue'
 
 const route = useRoute()
 const liveRoom = ref(null)
 const activeTab = ref('explain')
 const messages = ref([{ user: '直播助手', content: '欢迎大家进入直播间！' }])
 const inputMsg = ref('')
-const username = sessionStorage.getItem('username')
+const showLogin = ref(false)
+const username = ref(sessionStorage.getItem('username') || '')
+
 let socket = null
 
 onMounted(async () => {
-  // 获取直播间数据
   const res = await getLiveRoomDetail(route.params.id)
   if (res.data.code === 200) {
     liveRoom.value = res.data.data
     sessionStorage.setItem('roomID', liveRoom.value.id)
 
-    // 只有获取到roomID后再建立WebSocket连接
+    // WebSocket连接
     socket = new WebSocket(`ws://localhost:8080/v1/api/ws/${liveRoom.value.id}`)
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data)
@@ -99,6 +106,10 @@ onMounted(async () => {
 })
 
 function sendMsg() {
+  if (!username.value) {
+    showLogin.value = true
+    return
+  }
   if (!inputMsg.value.trim()) return
   if (!socket || socket.readyState !== 1) {
     alert('WebSocket 正在连接，请稍后再试')
@@ -106,11 +117,18 @@ function sendMsg() {
   }
   socket.send(
     JSON.stringify({
-      user: username,
+      user: username.value,
       content: inputMsg.value,
     })
   )
   inputMsg.value = ''
+}
+
+function handleLoginSuccess(newUsername) {
+  // 登录弹窗通过@emit传入新用户名
+  username.value = newUsername
+  sessionStorage.setItem('username', newUsername)
+  showLogin.value = false
 }
 
 onBeforeUnmount(() => {
@@ -126,26 +144,21 @@ onBeforeUnmount(() => {
 }
 .video-area {
   flex: 1 1 0;
-  /* 去掉居中 */
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   background: #222;
-  /* 新增 */
   position: relative;
   height: 100vh;
   min-width: 0;
   min-height: 0;
 }
-
 .video-player {
   width: 100%;
   height: 100%;
   background: #000;
-  border-radius: 0; /* 取消圆角防止出现黑角 */
-  margin: 0; /* 取消外边距 */
+  border-radius: 0;
+  margin: 0;
   display: block;
-  object-fit: cover; /* 铺满区域，可能会裁切部分画面 */
+  object-fit: cover;
 }
 .side-panel {
   width: 400px;
@@ -194,7 +207,7 @@ onBeforeUnmount(() => {
   margin-bottom: 7px;
   font-size: 14px;
   display: flex;
-  align-items: center; /* 让内容和用户名垂直居中 */
+  align-items: center;
   justify-content: flex-start;
 }
 .my-msg {

@@ -28,12 +28,3 @@ func (lr *LiveRoom) GetLRDetail(id int64) (*model.LiveRoom, error) {
 	}
 	return &lr.liveRoom, err
 }
-
-// 查询直播间回放地址
-func (lr *LiveRoom) GetReplayUrlByID(id int64) (string, error) {
-	err := lr.liveRoom.GetLiveRoomByID(db.DB, id)
-	if err != nil {
-		return "", err
-	}
-	return lr.liveRoom.ReplayURL, nil
-}
