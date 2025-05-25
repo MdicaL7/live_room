@@ -2,7 +2,7 @@
   <div class="anchor-card">
     <img class="anchor-avatar"
          src="https://png.pngtree.com/element_our/20190603/ourmid/pngtree-user-flat-character-avatar-png-image_1442186.jpg" />
-    <div class="anchor-name">现网蓝悦2号【7978勿动】</div>
+    <div class="anchor-name">网蓝悦1号</div>
     <el-button type="info"
                size="small">进店逛逛</el-button>
   </div>

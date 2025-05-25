@@ -4,10 +4,8 @@
          v-if="liveRoom">
       <!-- 左侧视频播放区 -->
       <div class="video-area">
-        <video class="video-player"
-               controls
-               :src="liveRoom?.replay_url"
-               :poster="liveRoom?.cover"></video>
+        <div ref="dplayerContainer"
+             style="width: 100%; height: 100%;"></div>
       </div>
 
       <!-- 右侧互动区 -->
@@ -72,10 +70,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { getLiveRoomDetail } from '@/api/liveRoom'
 import LoginDialog from '@/components/LoginDialog.vue'
+import DPlayer from 'dplayer'
 
 const route = useRoute()
 const liveRoom = ref(null)
@@ -86,12 +85,32 @@ const showLogin = ref(false)
 const username = ref(sessionStorage.getItem('username') || '')
 
 let socket = null
+const dplayerContainer = ref(null)
+let dp = null
 
 onMounted(async () => {
   const res = await getLiveRoomDetail(route.params.id)
   if (res.data.code === 200) {
     liveRoom.value = res.data.data
     sessionStorage.setItem('roomID', liveRoom.value.id)
+
+    // 等 DOM 真正挂载
+    await nextTick()
+
+    if (dp) dp.destroy() // 热重载或多次进入同页面时，先销毁老实例
+
+    let realVideoUrl =
+      liveRoom.value.replay_url || 'https://www.w3schools.com/html/mov_bbb.mp4'
+
+    dp = new DPlayer({
+      container: dplayerContainer.value,
+      autoplay: false,
+      video: {
+        url: realVideoUrl,
+        pic: liveRoom.value.cover,
+        type: 'auto',
+      },
+    })
 
     // WebSocket连接
     socket = new WebSocket(`ws://localhost:8080/v1/api/ws/${liveRoom.value.id}`)
@@ -125,7 +144,6 @@ function sendMsg() {
 }
 
 function handleLoginSuccess(newUsername) {
-  // 登录弹窗通过@emit传入新用户名
   username.value = newUsername
   sessionStorage.setItem('username', newUsername)
   showLogin.value = false
@@ -133,6 +151,7 @@ function handleLoginSuccess(newUsername) {
 
 onBeforeUnmount(() => {
   if (socket) socket.close()
+  if (dp) dp.destroy()
 })
 </script>
 
@@ -150,15 +169,6 @@ onBeforeUnmount(() => {
   height: 100vh;
   min-width: 0;
   min-height: 0;
-}
-.video-player {
-  width: 100%;
-  height: 100%;
-  background: #000;
-  border-radius: 0;
-  margin: 0;
-  display: block;
-  object-fit: cover;
 }
 .side-panel {
   width: 400px;
