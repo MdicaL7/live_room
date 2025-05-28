@@ -6,6 +6,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123123  
       MYSQL_DATABASE: live_room_db   
-      TZ: Asia/Shanghai              # 时区
+      TZ: Asia/Shanghai              
     ports:
-      - "3306:3306"                  # 主机:容器端口映射
+      - "3306:3306"                  

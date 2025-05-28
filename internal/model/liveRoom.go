@@ -46,7 +46,10 @@ func (lr *LiveRoom) GetLiveRoomByID(db *gorm.DB, id int64) error {
 
 func (lr *LiveRoom) GetLiveRooms(db *gorm.DB) ([]*LiveRoom, error) {
 	var live_rooms []*LiveRoom
-	if err := db.Find(&live_rooms).Error; err != nil {
+	// if err := db.Find(&live_rooms).Error; err != nil {
+	// 	return nil, err
+	// }
+	if err := db.Select("id,title,description,cover").Find(&live_rooms).Error; err != nil {
 		return nil, err
 	}
 	return live_rooms, nil

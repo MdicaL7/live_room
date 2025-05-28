@@ -27,5 +27,5 @@ func main() {
 	r.POST("/v1/api/login", user.Login)
 	//webSocket
 	r.GET("/v1/api/ws/:roomID", websocket.WebsHandler)
-	r.Run(":8080")
+	r.Run("0.0.0.0:8080")
 }
